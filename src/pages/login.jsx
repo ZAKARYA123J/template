@@ -8,7 +8,7 @@ export default function LoginPage() {
   return (
     <>
       <Helmet>
-        <title> Login | Minimal UI </title>
+      <title> OWR CONNECTE </title>
       </Helmet>
 
       <LoginView />

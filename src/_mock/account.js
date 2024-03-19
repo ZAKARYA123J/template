@@ -1,7 +1,8 @@
+import img from './owrconnecte.png'
 // ----------------------------------------------------------------------
 
 export const account = {
-  displayName: 'Jaydon Frankie',
-  email: 'demo@minimals.cc',
-  photoURL: '/assets/images/avatars/avatar_25.jpg',
+  displayName: 'OWR CONNECT',
+  email: 'owrconnecte@gmail.com',
+  photoURL: img,
 };

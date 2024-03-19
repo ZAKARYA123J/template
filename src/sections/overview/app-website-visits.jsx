@@ -1,65 +1,63 @@
-import PropTypes from 'prop-types';
+import axios from 'axios';
+import React, { useState, useEffect } from 'react';
 
-import Box from '@mui/material/Box';
-import Card from '@mui/material/Card';
-import CardHeader from '@mui/material/CardHeader';
 
-import Chart, { useChart } from 'src/components/chart';
+import Paper from '@mui/material/Paper'; // Moved before TableRow to address sorting warning
+import Table from '@mui/material/Table';
+import TableRow from '@mui/material/TableRow';
+import TableCell from '@mui/material/TableCell';
+import TableContainer from '@mui/material/TableContainer';
+import TableHead from '@mui/material/TableHead';
+import { Button } from '@mui/material';
+import TableBody from '@mui/material/TableBody';
 
-// ----------------------------------------------------------------------
+export default function AppWebsiteVisits() {
+  const [loadedSociete, setLoadedSociete] = useState([]);
 
-export default function AppWebsiteVisits({ title, subheader, chart, ...other }) {
-  const { labels, colors, series, options } = chart;
+  useEffect(() => {
+    const fetchData = async () => {
+      try {
+        const response = await axios.get('http://localhost:8000/api/societes');
+        const { data } = response;
+        setLoadedSociete(data.data);
+      } catch (error) {
+        console.log('Error:', error);
+      }
+    };
 
-  const chartOptions = useChart({
-    colors,
-    plotOptions: {
-      bar: {
-        columnWidth: '16%',
-      },
-    },
-    fill: {
-      type: series.map((i) => i.fill),
-    },
-    labels,
-    xaxis: {
-      type: 'datetime',
-    },
-    tooltip: {
-      shared: true,
-      intersect: false,
-      y: {
-        formatter: (value) => {
-          if (typeof value !== 'undefined') {
-            return `${value.toFixed(0)} visits`;
-          }
-          return value;
-        },
-      },
-    },
-    ...options,
-  });
+    fetchData();
+  }, []);
 
   return (
-    <Card {...other}>
-      <CardHeader title={title} subheader={subheader} />
-
-      <Box sx={{ p: 3, pb: 1 }}>
-        <Chart
-          dir="ltr"
-          type="line"
-          series={series}
-          options={chartOptions}
-          width="100%"
-          height={364}
-        />
-      </Box>
-    </Card>
+    <TableContainer component={Paper}>
+    <Table sx={{ minWidth: 650 }} aria-label="simple table">
+      <TableHead>
+        <TableRow>
+          <TableCell>Societes</TableCell>
+          <TableCell>Action</TableCell>
+        </TableRow>
+      </TableHead>
+      <TableBody>
+        {loadedSociete.map((row) => (
+          <TableRow
+            key={row.id}
+            sx={{ '&:last-child td, &:last-child th': { border: 0 } }}
+          >
+            <TableCell component="th" scope="row">
+              {row.Nomsociete}
+            </TableCell>
+            <TableCell><Button color="secondary">Edit</Button>
+<Button variant="outlined" color="error">
+  Remove
+</Button></TableCell>
+          
+          </TableRow>
+        ))}
+      </TableBody>
+    </Table>
+    <Button variant="contained" color="success">
+  Insert new societe
+</Button>
+  </TableContainer>
   );
 }
-
-AppWebsiteVisits.propTypes = {
-  chart: PropTypes.object,
-  subheader: PropTypes.string,
-  title: PropTypes.string,
-};
