@@ -174,6 +174,7 @@ export default function PostCard({ post, index }) {
             }),
           }}
         >
+          <p>zaza</p>
           {renderShape}
 
           {renderAvatar}

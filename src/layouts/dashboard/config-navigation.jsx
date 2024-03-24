@@ -1,5 +1,7 @@
 import SvgColor from 'src/components/svg-color';
-
+import { SlPrinter } from "react-icons/sl";
+import { RiPrinterFill } from "react-icons/ri";
+import { FaArrowAltCircleUp } from "react-icons/fa";
 // ----------------------------------------------------------------------
 
 const icon = (name) => (
@@ -15,12 +17,17 @@ const navConfig = [
   {
     title: 'Effecte cheque',
     path: '/blog',
-    icon: icon('ic_blog'),
+    icon: <FaArrowAltCircleUp fontSize={21}/>,
   },
   {
     title: 'Print cheque',
-    path: '/login',
-    icon: icon('ic_lock'),
+    path: '/cheque',
+    icon: <RiPrinterFill fontSize={20} />,
+  },
+  {
+    title: 'Effecte',
+    path: '/effecte',
+    icon: <RiPrinterFill fontSize={20} />,
   },
   {
     title: 'Not found',
